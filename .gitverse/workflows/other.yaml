@@ -1,0 +1,19 @@
+name: Manual Workflow Dispatch 2
+ 
+on:
+  push:
+    - '-'
+ 
+jobs:
+  display_inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+ 
+      - name: Display input values
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Timeout: ${{ inputs.timeout }} seconds"
+          echo "Dry Run: ${{ inputs.dry_run }}"
+          echo "Custom Tag: ${{ inputs.custom_tag }}"
