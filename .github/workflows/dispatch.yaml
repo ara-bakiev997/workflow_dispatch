@@ -1,48 +1,17 @@
-name: Manual Workflow Dispatch 2
- 
+name: push
+
 on:
+  push:
+    branches:
+      - "-"
 
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: choice
-        options:
-          - dev
-          - staging
-          - production
-        default: staging
-        description: 'Target deployment environment'
- 
-      timeout:
-        type: number
-        default: 60
-        description: 'Max time for deployment in seconds'
- 
-      dry_run:
-        type: boolean
-        default: false
-        description: 'If true, only simulate deployment'
- 
-      custom_tag:
-        description: 'Custom tag or label for this deployment'
-      
-      env:
-        description: 'Environment to run tests against'
-        type: environment
-        required: true
-
-      str:
-        description: 'string to run tests against'
-        type: string
-        required: true
- 
 jobs:
   display_inputs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
- 
+
       - name: Display input values
         run: |
           echo "Environment: ${{ inputs.environment }}"
