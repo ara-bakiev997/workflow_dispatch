@@ -14,4 +14,4 @@ jobs:
 
       - name: Display input values
         run: |
-          echo "Environment: very important env!"
+          echo "Environment: very important env!!"
