@@ -3,7 +3,7 @@ name: Push
 on:
   push:
     branches:
-      - "-"
+      - "*"
 
 jobs:
   display_inputs:
@@ -14,7 +14,4 @@ jobs:
 
       - name: Display input values
         run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Timeout: ${{ inputs.timeout }} seconds"
-          echo "Dry Run: ${{ inputs.dry_run }}"
-          echo "Custom Tag: ${{ inputs.custom_tag }}"
+          echo "Environment: very important env!"
