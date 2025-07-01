@@ -1,8 +1,8 @@
 
 on:
   push:
-    branches:
-      - "*"
+    tags:
+      - "r/*"
 
 jobs:
   display_inputs:
