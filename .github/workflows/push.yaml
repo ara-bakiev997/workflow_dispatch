@@ -1,16 +1,17 @@
 
 on:
   push:
-    tags:
-      - "r/*"
+    branches:
+      - '*'
 
 jobs:
   display_inputs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Display input values
-        run: |
-          echo "Environment: very important env!!!!"
+      - run: echo "Hello V4" > hello.txt
+      - name: Upload application 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: test
+          path: ./hello.txt
+          retention-days: 5
