@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Hello V4" > hello.txt
-      - name: Upload application 1
-        uses: actions/upload-artifact@v4
+      # - name: Upload application 1
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: test
+      #     path: ./hello.txt
+      #     retention-days: 5
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
         with:
-          name: test
-          path: ./hello.txt
-          retention-days: 5
+          dir: ./qt  # Относительный путь
+          version: '6.6.1'
+          modules: 'qtbase qtdeclarative'
