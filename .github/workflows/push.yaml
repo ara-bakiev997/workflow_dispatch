@@ -15,9 +15,22 @@ jobs:
       #     name: test
       #     path: ./hello.txt
       #     retention-days: 5
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Verify Python
+        run: python3 --version
+      
+      - name: Create Qt directory
+        run: mkdir -p qt  # Создаем директорию заранее
+      
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
           dir: ./qt  # Относительный путь
-          version: '6.6.1'
-          modules: 'qtbase qtdeclarative'
+          version: "6.7.0"
+          requested: "6.7.0"
+          modules: qtwebengine qtpositioning qtwebchannel
+      
