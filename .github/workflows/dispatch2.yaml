@@ -13,7 +13,7 @@ jobs:
       run: |
         mkdir -p my-artifact
         echo "This is a test file" > my-artifact/file1.txt
-        dd if=/dev/urandom of=my-artifact/large-file.bin bs=1M count=10    
+        dd if=/dev/urandom of=my-artifact/large-file.bin bs=10M count=40   
     - name: Upload artifact with fast compression (faster upload, larger size)
       uses: actions/upload-artifact@v4
       env:
