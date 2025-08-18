@@ -36,7 +36,7 @@ jobs:
         with:
           name: artifact-v4 # NOTE: same artifact name
           path: my-file.txt
-          overwrite: true
+          # overwrite: true
   test-naming:
     runs-on: ubuntu-latest
     steps:    
@@ -55,6 +55,7 @@ jobs:
       with:
         # also implicitly named as 'artifact', will fail here!
         path: extra-file.txt
+        overwrite: true
 
 
   # download:
