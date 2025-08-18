@@ -1,33 +1,40 @@
-name: Dispatch
+name: Dispatch upload
 
 on:
   workflow_dispatch:
-    inputs:
-      custom_tag:
-        description: "Custom tag or label for this deployment"
-
-      env:
-        description: "Environment to run tests against"
-        type: environment
-        required: true
-
-      str:
-        description: "string to run tests against"
-        type: string
-        required: true
 
 jobs:
-  display_inputs:
+  test-naming:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Display input values
-        run: |
-          echo "Environment: ${{ inputs.environment }}"
-          echo "Timeout: ${{ inputs.timeout }} seconds"
-          echo "Dry Run: ${{ inputs.dry_run }}"
-          echo "Custom Tag: ${{ inputs.custom_tag }}"
-          echo "Env: ${{ inputs.env }}"
-          echo "Str: ${{ inputs.str }}"
+    - uses: actions/checkout@v4
+    - run: ls -al    
+    - name: Create some files to upload
+      run: |
+        mkdir -p my-artifact
+        echo "This is a test file" > my-artifact/file1.txt
+        dd if=/dev/urandom of=my-artifact/large-file.bin bs=1M count=10    
+    - name: Upload artifact with fast compression (faster upload, larger size)
+      uses: actions/upload-artifact@v4
+      env:
+        NODE_TLS_REJECT_UNAUTHORIZED: 0
+      with:
+        name: fast-artifact
+        path: my-artifact
+        compression-level: 1  # Самый быстрый, но наименьшее сжатие    
+    - name: Upload artifact with balanced compression
+      uses: actions/upload-artifact@v4
+      env:
+        NODE_TLS_REJECT_UNAUTHORIZED: 0
+      with:
+        name: balanced-artifact
+        path: my-artifact
+        compression-level: 6  # Баланс между скоростью и сжатием (значение по умолчанию)    
+    - name: Upload artifact with maximum compression (slowest upload, smallest size)
+      uses: actions/upload-artifact@v4
+      env:
+          NODE_TLS_REJECT_UNAUTHORIZED: 0
+      with:
+        name: max-compression-artifact
+        path: my-artifact
+        compression-level: 9  # Максимальное сжатие, но медленнее 
