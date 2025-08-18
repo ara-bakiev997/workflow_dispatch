@@ -1,4 +1,4 @@
-name: Dispatch
+name: Dispatch Upload
 
 on:
   workflow_dispatch:
