@@ -1,4 +1,4 @@
-name: Dispatch upload
+name: Dispatch upload 2
 
 on:
   workflow_dispatch:
