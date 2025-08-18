@@ -4,58 +4,39 @@ on:
   workflow_dispatch:
 
 jobs:
-  # generate-and-upload:
-  #   runs-on: ubuntu-cloud-runner
-  #   steps:
-  #   - name: Generate file
-  #     run: |
-  #       # Создаем файл размером 400 МБ, заполненный нулями
-  #       dd if=/dev/urandom of=file1.txt bs=10M count=6 status=none
-  #       dd if=/dev/urandom of=file2.txt bs=10M count=6 status=none
-  #       dd if=/dev/urandom of=file3.txt bs=10M count=6 status=none
-  #       # Проверяем размер файла
-  #       ls -lh file1.txt
-        
-  #   - name: Upload file as artifact
-  #     uses: actions/upload-artifact@v4
-  #     env:
-  #         NODE_TLS_REJECT_UNAUTHORIZED: 0
-  #     with:
-  #       name: artifact-v4
-  #       path: |
-  #         file1.txt
-  #       # Если время загрузки превышает таймаут, можно увеличить его (в минутах)
-  #       retention-days: 1
-  #       compression-level: 9 # maximum compression
+  generate-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Generate file
+      run: |
+        dd if=/dev/urandom of=file1.txt bs=10M count=6 status=none
+        dd if=/dev/urandom of=file2.txt bs=10M count=6 status=none
+        dd if=/dev/urandom of=file3.txt bs=10M count=6 status=none
     
-  #   - name: Upload file as artifact 2
-  #     uses: actions/upload-artifact@v4
-  #     env:
-  #         NODE_TLS_REJECT_UNAUTHORIZED: 0
-  #     with:
-  #       name: artifact-v4
-  #       path: |
-  #         file2.txt
-  #         file3.txt
-  #       # Если время загрузки превышает таймаут, можно увеличить его (в минутах)
-  #       retention-days: 1
-  #       compression-level: 1 # maximum compression
+    - name: Upload file as artifact 2
+      uses: actions/upload-artifact@v4
+      env:
+          NODE_TLS_REJECT_UNAUTHORIZED: 0
+      with:
+        name: artifact-v4
+        path: |
+          file2.txt
+          file3.txt
+        retention-days: 1
+        compression-level: 1 # maximum compression
 
-    #     # todo надо проверить когда несколько джобов проверить перезапись, ++ 
-    #     # и несколько файлов в одной джобе +++
-    #     # todo надо проверить несколько джобов дополняют один и тот же артефакт другими файлами ++ нет переписывают
-  # upload-again:
-  #   needs: generate-and-upload
-  #   runs-on: ubuntu-cloud-runner
-  #   steps:
-  #     - name: Create a different file
-  #       run: echo "goodbye world" > my-file.txt
-  #     - name: Upload Artifact
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: artifact-v4 # NOTE: same artifact name
-  #         path: my-file.txt
-  #         overwrite: true
+  upload-again:
+    needs: generate-and-upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a different file
+        run: echo "goodbye world" > my-file.txt
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-v4 # NOTE: same artifact name
+          path: my-file.txt
+          overwrite: true
   test-naming:
     runs-on: ubuntu-latest
     steps:    
