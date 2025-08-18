@@ -1,9 +1,6 @@
 name: Dispatch
 
 on:
-  push:
-    branches:
-      - "-"
   workflow_dispatch:
     inputs:
       custom_tag:
@@ -34,3 +31,15 @@ jobs:
           echo "Custom Tag: ${{ inputs.custom_tag }}"
           echo "Env: ${{ inputs.env }}"
           echo "Str: ${{ inputs.str }}"
+
+      - run: echo hi > world.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          # implicitly named as 'artifact'
+          path: world.txt
+      
+      - run: echo howdy > extra-file.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          # also implicitly named as 'artifact', will fail here!
+          path: extra-file.txt
