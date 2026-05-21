@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ toJson(github) }}"
-      - run: echo "${{ steps }}"
-      - run: echo "${{ job }}"
+      - run: echo "${{ toJson(steps) }}"
+      - run: echo "${{ toJson(job) }}"
